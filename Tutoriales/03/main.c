@@ -47,15 +47,15 @@ Rectangle GetSpriteRect(int index)
     rtpAtlasSprite spr = rtpDescAsteroids[index];
 
     if (spr.trimmed) {
-        return (Rectangle) {
-            spr.positionX,
-            spr.positionY,
+        return (Rectangle){
+            spr.positionX + spr.trimRecX,
+            spr.positionY + spr.trimRecY,
             spr.trimRecWidth,
             spr.trimRecHeight
         };
     }
 
-    return (Rectangle) {
+    return (Rectangle){
         spr.positionX,
         spr.positionY,
         spr.sourceWidth,
@@ -78,7 +78,7 @@ void DrawSprite(Texture2D atlas, int index, Vector2 position, float rotation, Co
 // Finds the first inactive slot in the pool and spawns a bullet there.
 // If the pool is full, the bullet is silently dropped — no allocation,
 // no crash. This is the intended behavior for object pools.
-void SpawnBullet(Bullet pool[], Player* player)
+void SpawnBullet(Bullet pool[], Player *player)
 {
     for (int i = 0; i < MAX_BULLETS; i++) {
         if (!pool[i].active) {
@@ -91,12 +91,12 @@ void SpawnBullet(Bullet pool[], Player* player)
                     player->position,
                     Vector2Scale(direction, BULLET_SPAWN_OFFSET)
                 ),
-                    // Bullets travel at a fixed speed, independent of ship velocity
-                    .velocity = Vector2Scale(direction, BULLET_SPEED),
-                    .rotation = player->rotation,
-                    .lifetime = BULLET_LIFETIME,
-                    .animTimer = 0.0f,
-                    .active = true,
+                // Bullets travel at a fixed speed, independent of ship velocity
+                .velocity = Vector2Scale(direction, BULLET_SPEED),
+                .rotation = player->rotation,
+                .lifetime = BULLET_LIFETIME,
+                .animTimer = 0.0f,
+                .active = true,
             };
             return;
         }
@@ -222,21 +222,21 @@ int main(void)
         //-----------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(BLACK);
+            ClearBackground(BLACK);
 
-        // Background tiling
-        for (int y = 0; y < SCREEN_HEIGHT; y += (int)bgSource.height) {
-            for (int x = 0; x < SCREEN_WIDTH; x += (int)bgSource.width) {
-                DrawTextureRec(atlas, bgSource, (Vector2) { x, y }, WHITE);
+            // Background tiling
+            for (int y = 0; y < SCREEN_HEIGHT; y += (int)bgSource.height) {
+                for (int x = 0; x < SCREEN_WIDTH; x += (int)bgSource.width) {
+                    DrawTextureRec(atlas, bgSource, (Vector2){ x, y }, WHITE);
+                }
             }
-        }
 
-        // Bullets (drawn behind the player so they emerge from under the ship)
-        DrawBullets(bullets, atlas);
+            // Bullets (drawn behind the player so they emerge from under the ship)
+            DrawBullets(bullets, atlas);
 
-        // Player
-        int playerSprite = player.thrusting ? SPR_PLAYER_BOOST : SPR_PLAYER;
-        DrawSprite(atlas, playerSprite, player.position, player.rotation, WHITE);
+            // Player
+            int playerSprite = player.thrusting ? SPR_PLAYER_BOOST : SPR_PLAYER;
+            DrawSprite(atlas, playerSprite, player.position, player.rotation, WHITE);
 
         EndDrawing();
     }

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(RG35XX_Game C)
+project(Asteroids C)
 
 # Set C99 standard
 set(CMAKE_C_STANDARD 99)
@@ -8,12 +8,11 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 # Define source and header files
 set(SOURCES
     src/main.c
-    src/game.c
 )
 
 set(HEADERS
     include/config.h
-    include/game.h
+    include/Asteroids.h
 )
 
 # Options for build configuration
