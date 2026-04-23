@@ -78,5 +78,5 @@ This repository does not define automated tests, `ctest` targets, or lint comman
 - Do short meaningful commits.
 - Ask about the commit or push before.
 - Do not use co-authored-by in commit messages.
-- Check for Raylib api and examples if in doubt.
+- Check for Raylib api and examples if in doubt, you can find it in the build directory.
 - Keep C99 code standards.
