@@ -12,7 +12,7 @@ cmake --build . --config Release
 if errorlevel 1 goto error
 
 echo.
-echo Build successful! Executable is in build-windows\Release\
+echo Build successful! Executable is in build-windows\Release\Asteroids.exe
 goto end
 
 :error

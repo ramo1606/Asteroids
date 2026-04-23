@@ -1,4 +1,4 @@
-:: build-rg35xx-vs.bat
+:: build-rg35xx.bat
 :: Use this if you have Visual Studio installed
 @echo off
 echo Building for RG35XX Plus using Visual Studio NMake...
@@ -30,7 +30,7 @@ nmake
 if errorlevel 1 goto error
 
 echo.
-echo Build successful! Executable is in build-rg35xx\rg35xx\
+echo Build successful! Executable is in build-rg35xx\rg35xx\Asteroids
 echo Copy the executable to your RG35XX Plus
 goto end
 

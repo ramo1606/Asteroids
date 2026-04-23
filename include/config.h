@@ -30,7 +30,7 @@
 #define PLAYER_ROTATION_SPEED   200.0f      // Degrees per second
 #define PLAYER_THRUST           300.0f      // Acceleration in pixels/sec²
 #define PLAYER_MAX_SPEED        250.0f      // Max velocity magnitude in pixels/sec
-#define PLAYER_DRAG             0.98f       // Velocity multiplier per frame (1.0 = no drag)
+#define PLAYER_DRAG             0.98f       // Velocity multiplier at TARGET_FPS (1.0 = no drag)
 #define PLAYER_FIRE_COOLDOWN    0.15f       // Seconds between shots
 
 // --- Bullets ---

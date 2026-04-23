@@ -1,12 +1,12 @@
 #!/bin/bash
-# build-codespaces.sh
+# build-codespace.sh
 # Cross-compile the project for Windows from GitHub Codespaces (Linux)
 # Produces a standalone .exe you can download and run on Windows.
 #
 # Usage:
-#   ./build-codespaces.sh          # Build Release (default)
-#   ./build-codespaces.sh Debug    # Build Debug
-#   ./build-codespaces.sh clean    # Remove build directory
+#   ./build-codespace.sh          # Build Release (default)
+#   ./build-codespace.sh Debug    # Build Debug
+#   ./build-codespace.sh clean    # Remove build directory
 
 set -e
 
@@ -25,7 +25,7 @@ fi
 # Check that the MinGW cross-compiler is installed
 if ! command -v x86_64-w64-mingw32-gcc &> /dev/null; then
     echo "MinGW-w64 cross-compiler not found. Installing..."
-    sudo apt-get update -qq && sudo apt-get install -y -qq mingw-w64 gcc-mingw-w64-x86-64
+    sudo apt-get update -qq && sudo apt-get install -y -qq make mingw-w64 gcc-mingw-w64-x86-64
 fi
 
 echo "============================================"

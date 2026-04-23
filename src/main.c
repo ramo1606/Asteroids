@@ -71,6 +71,21 @@ void DrawSprite(Texture2D atlas, int index, Vector2 position, float rotation, Co
     DrawTexturePro(atlas, source, dest, origin, rotation, tint);
 }
 
+float WrapCoordinate(float value, float maxValue)
+{
+    if (value < 0.0f) return maxValue;
+    if (value >= maxValue) return 0.0f;
+    return value;
+}
+
+Vector2 WrapPosition(Vector2 position)
+{
+    return (Vector2) {
+        WrapCoordinate(position.x, (float)SCREEN_WIDTH),
+        WrapCoordinate(position.y, (float)SCREEN_HEIGHT)
+    };
+}
+
 //-----------------------------------------------------------------------------------
 // Bullet Functions
 //-----------------------------------------------------------------------------------
@@ -115,6 +130,7 @@ void UpdateBullets(Bullet pool[], float dt)
             pool[i].position,
             Vector2Scale(pool[i].velocity, dt)
         );
+        pool[i].position = WrapPosition(pool[i].position);
 
         // Animate — accumulate time and use it to pick the frame
         pool[i].animTimer += dt;
@@ -198,11 +214,12 @@ int main(void)
             );
         }
 
-        player.velocity = Vector2Scale(player.velocity, PLAYER_DRAG);
+        player.velocity = Vector2Scale(player.velocity, powf(PLAYER_DRAG, dt * TARGET_FPS));
         player.position = Vector2Add(
             player.position,
             Vector2Scale(player.velocity, dt)
         );
+        player.position = WrapPosition(player.position);
 
         // --- Shooting ---
         // Cooldown decreases each frame. When it hits zero, the player can fire.

@@ -1,6 +1,6 @@
-# RG35XX Game Development with Raylib 5.5
+# Asteroids with Raylib 5.5
 
-A cross-platform raylib 5.5 game project that can be compiled for both Windows (development) and RG35XX handheld consoles (Plus/H/40/V) running muOS.
+A cross-platform raylib 5.5 game project that can be compiled for Windows development and RG35XX handheld consoles (Plus/H/40/V) running muOS.
 
 ## Target Platform
 
@@ -25,23 +25,17 @@ A cross-platform raylib 5.5 game project that can be compiled for both Windows (
 ## Project Structure
 
 ```
-RG35XX/
-├── src/                    # Source code files
-│   ├── main.c             # Main entry point
-│   └── game.c             # Game logic implementation
-├── include/               # Header files
-│   ├── config.h          # Game configuration and constants
-│   └── game.h            # Game function declarations
-├── assets/               # Game assets (textures, audio, etc.)
-│   └── README.md         # Asset organization guide
-├── rg35xx-sysroot/      # RG35XX system libraries and headers
-│   └── usr/
-│       ├── lib/          # ARM compiled libraries
-│       └── include/      # Header files
-├── CMakeLists.txt        # CMake configuration
-├── build-windows.bat     # Windows build script
-├── build-rg35xx.bat      # RG35XX build script
-└── rg35xx-toolchain.cmake # RG35XX cross-compilation setup
+Asteroids/
+├── src/main.c                 # Current gameplay loop, entities, update/draw helpers
+├── include/config.h           # Tunable gameplay constants and sprite indices
+├── include/Asteroids.h        # Generated atlas metadata from rTexPacker
+├── assets/                    # Texture atlas and other runtime assets
+├── rg35xx-sysroot/usr/        # RG35XX system libraries and headers
+├── CMakeLists.txt             # Shared build configuration
+├── build-windows.bat          # Visual Studio desktop build
+├── build-codespace.sh         # Linux-to-Windows cross-build for Codespaces
+├── build-rg35xx.bat           # RG35XX build script for Windows hosts
+└── rg35xx-toolchain.cmake     # RG35XX cross-compilation setup
 ```
 
 ## Setup Instructions
@@ -103,6 +97,11 @@ set(TOOLCHAIN_PATH "C:/your/path/to/aarch64-none-linux-gnu/bin")
 build-windows.bat
 ```
 
+#### Using GitHub Codespaces or Linux
+```bash
+./build-codespace.sh
+```
+
 #### Manual Build
 ```batch
 mkdir build-windows
@@ -112,14 +111,14 @@ cmake --build . --config Release
 ```
 
 #### Visual Studio Development
-1. Open `build-windows/RG35XX_Game.sln` in **Visual Studio 2022**
+1. Open `build-windows/Asteroids.sln` in **Visual Studio 2022**
 2. The project is automatically set as the startup project
 3. Source files are organized in filters:
    - **Header Files/include/** - All header files
    - **Source Files/src/** - All source files
 4. Press F5 to build and run
 
-The executable will be in `build-windows/Release/RG35XX_Game.exe`
+The executable will be in `build-windows/Release/Asteroids.exe`
 
 ### For RG35XX Target
 
@@ -136,12 +135,12 @@ cmake .. -G "NMake" -DCMAKE_TOOLCHAIN_FILE=../rg35xx-toolchain.cmake -DBUILD_FOR
 cmake --build .
 ```
 
-The executable will be in `build-rg35xx/rg35xx/RG35XX_Game`
+The executable will be in `build-rg35xx/rg35xx/Asteroids`
 
 #### Post-Build Setup
 After building for RG35XX, make the binary executable:
 ```bash
-chmod +x RG35XX_Game
+chmod +x Asteroids
 ```
 
 ## Deploying to RG35XX Device
@@ -149,7 +148,7 @@ chmod +x RG35XX_Game
 ### Transfer the Game
 Copy the compiled binary to your RG35XX device:
 ```bash
-scp RG35XX_Game root@192.168.8.157:/mnt/mmc/ports
+scp Asteroids root@192.168.8.157:/mnt/mmc/ports
 ```
 
 **Note**: Replace `192.168.8.157` with your RG35XX device's actual IP address.
@@ -160,30 +159,27 @@ scp RG35XX_Game root@192.168.8.157:/mnt/mmc/ports
    /mnt/mmc/ports
 
 3. Execute:
-   RG35XX_Game
+   Asteroids
 
 ## Game Features
 
-- **D-PAD Left/Right**: Rotate the square
-- **D-PAD Up/Down**: Change colors  
-- **A Button**: Scale up
-- **B Button**: Scale down
-- **START Button**: Exit game
+- **Left / Right**: Rotate the ship
+- **Up**: Thrust forward
+- **Space**: Fire bullets
+- **Escape / window close**: Exit game
 
 ## Code Organization
 
-- `config.h`: Game constants and configuration
-- `game.h`: Function declarations and game state structure
-- `game.c`: Game logic implementation
-- `main.c`: Entry point and main game loop
+- `include/config.h`: Game constants and configuration
+- `include/Asteroids.h`: Generated atlas metadata used for sprite lookup
+- `src/main.c`: Entry point, gameplay state, helpers, and main game loop
 
 ## Adding New Features
 
 1. Add constants to `include/config.h`
-2. Add function declarations to `include/game.h`
-3. Implement functions in `src/game.c`
-4. Update game state structure as needed
-5. Test on both Windows and RG35XX platforms
+2. Extend the gameplay helpers in `src/main.c`
+3. Add any new sprite index macros that map to `include/Asteroids.h`
+4. Test on both Windows and RG35XX platforms
 
 ## Troubleshooting
 

@@ -78,7 +78,7 @@ if(BUILD_FOR_RG35XX)
     
     # Set up EGL and GLESv2 libraries
     set(EGL_LIBRARY "${RG35XX_LIBS_PATH}/libEGL.so" CACHE FILEPATH "EGL library")
-    set(GLES3_LIBRARY "${RG35XX_LIBS_PATH}/libGLESv2.so" CACHE FILEPATH "GLESv2 library")
+    set(GLES2_LIBRARY "${RG35XX_LIBS_PATH}/libGLESv2.so" CACHE FILEPATH "GLESv2 library")
     
     # Check if the library files actually exist
     if(NOT EXISTS "${RG35XX_LIBS_PATH}/libSDL2-2.0.so.0")
@@ -87,7 +87,7 @@ if(BUILD_FOR_RG35XX)
     if(NOT EXISTS "${EGL_LIBRARY}")
         message(FATAL_ERROR "EGL library not found at: ${EGL_LIBRARY}")
     endif()
-    if(NOT EXISTS "${GLES3_LIBRARY}")
+    if(NOT EXISTS "${GLES2_LIBRARY}")
         message(FATAL_ERROR "GLESv2 library not found at: ${GLES2_LIBRARY}")
     endif()
     

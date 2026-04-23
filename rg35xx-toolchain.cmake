@@ -11,12 +11,14 @@ set(CMAKE_SYSTEM_PROCESSOR aarch64)
 # Or if you're using Linaro toolchain: https://releases.linaro.org/components/toolchain/binaries/
 
 # Set the path to your AArch64 toolchain (adjust this path to match your installation)
-set(TOOLCHAIN_PATH "C:/Program Files (x86)/Arm GNU Toolchain aarch64-none-linux-gnu/14.3 rel1/bin")
+if(NOT DEFINED TOOLCHAIN_PATH)
+    set(TOOLCHAIN_PATH "C:/Program Files (x86)/Arm GNU Toolchain aarch64-none-linux-gnu/14.3 rel1/bin" CACHE PATH "Path to the aarch64-none-linux-gnu toolchain bin directory")
+endif()
 
-set(CMAKE_C_COMPILER ${TOOLCHAIN_PATH}/aarch64-none-linux-gnu-gcc.exe)
-set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PATH}/aarch64-none-linux-gnu-g++.exe)
-set(CMAKE_AR ${TOOLCHAIN_PATH}/aarch64-none-linux-gnu-ar.exe)
-set(CMAKE_RANLIB ${TOOLCHAIN_PATH}/aarch64-none-linux-gnu-ranlib.exe)
+set(CMAKE_C_COMPILER "${TOOLCHAIN_PATH}/aarch64-none-linux-gnu-gcc.exe")
+set(CMAKE_CXX_COMPILER "${TOOLCHAIN_PATH}/aarch64-none-linux-gnu-g++.exe")
+set(CMAKE_AR "${TOOLCHAIN_PATH}/aarch64-none-linux-gnu-ar.exe")
+set(CMAKE_RANLIB "${TOOLCHAIN_PATH}/aarch64-none-linux-gnu-ranlib.exe")
 
 # Target specific flags for Cortex-A53 (ARM64)
 set(CMAKE_C_FLAGS "-march=armv8-a -mtune=cortex-a53 -O2 -ffunction-sections -fdata-sections")
